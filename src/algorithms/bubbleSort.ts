@@ -1,7 +1,7 @@
 import { AlgorithmStep } from '../types/algorithm';
 import { recordComparisonStep, recordSwapStep, recordCompletionStep } from '../utils/algorithmUtils';
 
-interface BubbleSortData {
+export interface BubbleSortData {
   array: number[];
   currentIndex: number;
   comparingIndex: number;

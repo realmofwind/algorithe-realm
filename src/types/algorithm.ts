@@ -9,7 +9,7 @@ export interface AlgorithmState {
 }
 
 // 算法步骤接口
-export interface AlgorithmStep<T = Record<string, unknown>> {
+export interface AlgorithmStep<T> {
   step: number;
   data: T; // 使用泛型来支持不同类型的数据
   description: string;
@@ -42,7 +42,7 @@ export interface AlgorithmConfig {
 }
 
 // 算法可视化组件接口
-export interface AlgorithmVisualizerProps<T = Record<string, unknown>> {
+export interface AlgorithmVisualizerProps<T> {
   algorithm: AlgorithmController;
   state: AlgorithmState;
   currentStep: AlgorithmStep<T>;

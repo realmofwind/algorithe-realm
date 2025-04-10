@@ -1,0 +1,108 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem;
+}
+
+.arrayContainer {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  height: 100%;
+  width: 100%;
+}
+
+.bar {
+  flex: 1;
+  background-color: #e0e0e0;
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 0.5rem;
+  transition: background-color 0.3s ease;
+  min-width: 40px;
+  position: relative;
+}
+
+.lenged {
+  display: flex;
+  gap: 0.5rem;
+}
+.lengedItem {
+  padding: 4px 6px;
+  border-radius: 2px;
+  font-size: 12px;
+}
+
+.lengedItem.sorted, .bar.sorted {
+  background-color: #00b894;
+}
+
+.lengedItem.pivot, .bar.pivot {
+  background-color: #e17055;
+}
+
+.lengedItem.comparing, .bar.comparing {
+  background-color: #00a8ff;
+}
+
+.lengedItem.partitioned, .bar.partitioned {
+  background-color: #fdcb6e;
+}
+
+.lengedItem.currentPartition, .bar.currentPartition {
+  background-color: #6c5ce7;
+}
+
+.value {
+  color: #333;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.pivotLabel {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  color: #e17055;
+  font-weight: 500;
+  white-space: nowrap;
+} 
+
+.leftLabel, .rightLabel {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.leftLabel {
+  color: #e75c5c;
+}
+.rightLabel {
+  color: #27e727;
+}
+
+.iLabel, .jLabel {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  font-weight: 500;
+  white-space: nowrap;
+  color: black;
+}
+
+.description {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 1rem;
+}

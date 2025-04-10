@@ -55,7 +55,7 @@ export function recordComparisonStep<T>(
   recordStep(
     steps,
     data,
-    `Comparing elements at positions ${index1} and ${index2}`,
+    `比较元素 ${index1} 和 ${index2}`,
     metadata
   );
 }
@@ -78,7 +78,7 @@ export function recordSwapStep<T>(
   recordStep(
     steps,
     data,
-    `Swapped elements at positions ${index1} and ${index2}`,
+    `交换元素 ${index1} 和 ${index2}`,
     metadata
   );
 }

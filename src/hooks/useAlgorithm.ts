@@ -12,7 +12,7 @@ const DEFAULT_CONFIG: Required<AlgorithmConfig> = {
   onStepChange: () => {},
 };
 
-export function useAlgorithm<T = Record<string, unknown>>(
+export function useAlgorithm<T>(
   initialSteps: AlgorithmStep<T>[],
   config: AlgorithmConfig = {}
 ): [AlgorithmState, AlgorithmController] {
@@ -25,6 +25,18 @@ export function useAlgorithm<T = Record<string, unknown>>(
     speed: mergedConfig.initialSpeed,
     metadata: {},
   });
+
+  useEffect(() => {
+    console.log('initialSteps', initialSteps);
+    setState(prev => ({
+      ...prev,
+      currentStep: 0,
+      totalSteps: initialSteps.length,
+      isRunning: false,
+      isPaused: false,
+      metadata: {},
+    }));
+  }, [initialSteps]);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const stateRef = useRef<AlgorithmState>(state);

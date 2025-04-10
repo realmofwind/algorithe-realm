@@ -1,29 +1,93 @@
 'use client';
 
+import { useState, useMemo, useCallback } from 'react';
 import { useAlgorithm } from '../hooks/useAlgorithm';
 import { AlgorithmVisualizer } from '../components/AlgorithmVisualizer';
 import { BubbleSortVisualizer } from '../components/BubbleSortVisualizer';
+import { QuickSortVisualizer } from '../components/QuickSortVisualizer';
+import { SelectSortVisualizer } from '../components/SelectSortVisualizer';
 import { generateBubbleSortSteps } from '../algorithms/bubbleSort';
+import { generateQuickSortSteps } from '../algorithms/quickSort';
+import { generateSelectSortSteps } from '../algorithms/selectSort';
 import styles from './page.module.css';
+import { BubbleSortData } from '@/algorithms/bubbleSort';
+import { QuickSortData } from '@/algorithms/quickSort';
+import { SelectSortData } from '@/algorithms/selectSort';
+import { AlgorithmStep } from '@/types/algorithm';
+
+type AlgorithmType = 'bubble' | 'quick' | 'select';
 
 export default function Home() {
+  const [algorithmType, setAlgorithmType] = useState<AlgorithmType>('bubble');
+  
   // 生成一个随机数组用于排序
-  const initialArray = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
-  const steps = generateBubbleSortSteps(initialArray);
-  const [state, controller] = useAlgorithm(steps);
-  const currentStep = steps[state.currentStep];
+  // const initialArray = Array.from({ length: 10 }, () => Math.floor(Math.random() * 20) + 1);
+  const initialArray = useMemo(() => [2, 4, 1, 0, 3, 5], []);
+  
+  // 根据选择的算法类型生成步骤
+  const steps = useMemo(() =>{
+    switch(algorithmType) {
+      case 'bubble':
+        return generateBubbleSortSteps(initialArray);
+      case 'quick':
+        return generateQuickSortSteps(initialArray);
+      case 'select':
+        return generateSelectSortSteps(initialArray);
+      default:
+        return [];
+    }
+  }, [algorithmType, initialArray]);
+
+  
+    
+  const [state, controller] =  useAlgorithm<BubbleSortData | QuickSortData | SelectSortData>(steps);
+  const currentStep: AlgorithmStep<BubbleSortData | QuickSortData | SelectSortData> = steps[state.currentStep];
+
+  console.log({steps, currentStep, state});
+
+  const renderAlgorithmVisualizer = useCallback(() => {
+    switch(algorithmType) {
+      case 'bubble':
+        return <BubbleSortVisualizer currentStep={currentStep as AlgorithmStep<BubbleSortData>} />;
+      case 'quick':
+        return <QuickSortVisualizer currentStep={currentStep as AlgorithmStep<QuickSortData>} />;
+      case 'select':
+        return <SelectSortVisualizer currentStep={currentStep as AlgorithmStep<SelectSortData>} />;
+      default:
+        return null;
+    }
+  }, [algorithmType, currentStep]);
 
   return (
     <div className={styles.page}>
       <main className={styles.main}>
         <h1>Algorithm Visualization</h1>
-        <h2>Bubble Sort</h2>
+        <div className={styles.algorithmSelector}>
+          <button
+            className={`${styles.algorithmButton} ${algorithmType === 'bubble' ? styles.active : ''}`}
+            onClick={() => setAlgorithmType('bubble')}
+          >
+            Bubble Sort
+          </button>
+          <button
+            className={`${styles.algorithmButton} ${algorithmType === 'quick' ? styles.active : ''}`}
+            onClick={() => setAlgorithmType('quick')}
+          >
+            Quick Sort
+          </button>
+          <button
+            className={`${styles.algorithmButton} ${algorithmType === 'select' ? styles.active : ''}`}
+            onClick={() => setAlgorithmType('select')}
+          >
+            Select Sort
+          </button>
+        </div>
         <AlgorithmVisualizer
           algorithm={controller}
           state={state}
           currentStep={currentStep}
         >
-          <BubbleSortVisualizer currentStep={currentStep} />
+          {renderAlgorithmVisualizer()}
         </AlgorithmVisualizer>
       </main>
     </div>
