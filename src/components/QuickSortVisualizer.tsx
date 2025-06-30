@@ -25,8 +25,8 @@ export const QuickSortVisualizer: React.FC<QuickSortVisualizerProps> = ({ curren
         <div className={styles.arrayContainer}>
           {array.map((value, index) => {
             const isPivot = value === pivot;
-            const isPartitioned = partitionIndices && index >= partitionIndices.start && index <= partitionIndices.end;
-            const isCurrentPartition = currentPartition && index >= currentPartition.start && index <= currentPartition.end;
+            const isPartitioned = partitionIndices && index >= partitionIndices[0] && index <= partitionIndices[1];
+            const isCurrentPartition = currentPartition && index >= currentPartition[0] && index <= currentPartition[1];
             const isSorted = sortedIndices.includes(index);
             const isComparing = index === left || index === right;
 

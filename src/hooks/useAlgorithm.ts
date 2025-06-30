@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import { AlgorithmState, AlgorithmStep, AlgorithmController, AlgorithmConfig } from '../types/algorithm';
 
 const DEFAULT_CONFIG: Required<AlgorithmConfig> = {
@@ -16,7 +16,7 @@ export function useAlgorithm<T>(
   initialSteps: AlgorithmStep<T>[],
   config: AlgorithmConfig = {}
 ): [AlgorithmState, AlgorithmController] {
-  const mergedConfig = { ...DEFAULT_CONFIG, ...config };
+  const mergedConfig = useMemo(() => ({ ...DEFAULT_CONFIG, ...config }), [config]);
   const [state, setState] = useState<AlgorithmState>({
     currentStep: 0,
     totalSteps: initialSteps.length,
@@ -45,55 +45,6 @@ export function useAlgorithm<T>(
     stateRef.current = state;
   }, [state]);
 
-  // 处理步骤变化
-  useEffect(() => {
-    mergedConfig.onStepChange(state.currentStep);
-  }, [state.currentStep, mergedConfig]);
-
-  const start = useCallback(() => {
-    setState(prev => {
-      const newState = { ...prev, isRunning: true, isPaused: false };
-      return newState;
-    });
-    // 使用 setTimeout 确保在状态更新后执行
-    setTimeout(() => {
-      runNextStep(stateRef.current);
-    }, 100);
-  }, []);
-
-  const pause = useCallback(() => {
-    setState(prev => ({ ...prev, isPaused: true }));
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-  }, []);
-
-  const resume = useCallback(() => {
-    setState(prev => {
-      const newState = { ...prev, isPaused: false };
-      // 使用 setTimeout 确保在状态更新后执行
-      setTimeout(() => {
-        runNextStep(newState);
-      }, 0);
-      return newState;
-    });
-  }, []);
-
-  const stop = useCallback(() => {
-    setState(prev => ({ ...prev, isRunning: false, isPaused: false, currentStep: 0 }));
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-  }, []);
-
-  const setSpeed = useCallback((speed: number) => {
-    const clampedSpeed = Math.min(
-      Math.max(speed, mergedConfig.minSpeed),
-      mergedConfig.maxSpeed
-    );
-    setState(prev => ({ ...prev, speed: clampedSpeed }));
-  }, [mergedConfig.minSpeed, mergedConfig.maxSpeed]);
-
   const nextStep = useCallback(() => {
     setState(prev => {
       if (prev.currentStep < prev.totalSteps - 1) {
@@ -118,13 +69,11 @@ export function useAlgorithm<T>(
     });
   }, [mergedConfig.loop]);
 
-  const updateMetadata = useCallback((key: string, value: unknown) => {
-    setState(prev => ({
-      ...prev,
-      metadata: { ...prev.metadata, [key]: value },
-    }));
-  }, []);
 
+  // 处理步骤变化
+  useEffect(() => {
+    mergedConfig.onStepChange(state.currentStep);
+  }, [state.currentStep, mergedConfig]);
   const runNextStep = useCallback((currentState: AlgorithmState) => {
     if (currentState.isPaused || !currentState.isRunning) return;
 
@@ -141,6 +90,60 @@ export function useAlgorithm<T>(
       mergedConfig.onComplete();
     }
   }, [nextStep, mergedConfig]);
+
+  const start = useCallback(() => {
+    setState(prev => {
+      const newState = { ...prev, isRunning: true, isPaused: false };
+      return newState;
+    });
+    // 使用 setTimeout 确保在状态更新后执行
+    setTimeout(() => {
+      runNextStep(stateRef.current);
+    }, 100);
+  }, [runNextStep]);
+
+  const pause = useCallback(() => {
+    setState(prev => ({ ...prev, isPaused: true }));
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+  }, []);
+
+  const resume = useCallback(() => {
+    setState(prev => {
+      const newState = { ...prev, isPaused: false };
+      // 使用 setTimeout 确保在状态更新后执行
+      setTimeout(() => {
+        runNextStep(newState);
+      }, 0);
+      return newState;
+    });
+  }, [runNextStep]);
+
+  const stop = useCallback(() => {
+    setState(prev => ({ ...prev, isRunning: false, isPaused: false, currentStep: 0 }));
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+  }, []);
+
+  const setSpeed = useCallback((speed: number) => {
+    const clampedSpeed = Math.min(
+      Math.max(speed, mergedConfig.minSpeed),
+      mergedConfig.maxSpeed
+    );
+    setState(prev => ({ ...prev, speed: clampedSpeed }));
+  }, [mergedConfig.minSpeed, mergedConfig.maxSpeed]);
+
+  
+  const updateMetadata = useCallback((key: string, value: unknown) => {
+    setState(prev => ({
+      ...prev,
+      metadata: { ...prev.metadata, [key]: value },
+    }));
+  }, []);
+
+  
 
   // 自动播放
   useEffect(() => {

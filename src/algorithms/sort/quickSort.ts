@@ -1,5 +1,5 @@
 import { AlgorithmStep } from '../../types/algorithm';
-import { recordStep, recordCompletionStep, recordSwapStep, recordComparisonStep } from '../../utils/algorithmUtils';
+import { recordStep, recordCompletionStep, recordSwapStep } from '../../utils/algorithmUtils';
 
 // 快速排序的数据类型
 export interface QuickSortData {
@@ -174,7 +174,7 @@ export function generateQuickSortSteps(arr: number[]): AlgorithmStep<QuickSortDa
   // 记录开始
   recordStep(steps, {
     array: [...array],
-    pivot: null,
+    pivot: 0,
     left: null,
     right: null,
     i: null,
@@ -189,7 +189,7 @@ export function generateQuickSortSteps(arr: number[]): AlgorithmStep<QuickSortDa
   // 记录完成
   recordCompletionStep(steps, {
     array: [...array],
-    pivot: null,
+    pivot: 0,
     left: null,
     right: null,
     i: null,

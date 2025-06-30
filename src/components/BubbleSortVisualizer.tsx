@@ -1,9 +1,10 @@
 import React from 'react';
 import { AlgorithmStep } from '../types/algorithm';
 import styles from './BubbleSortVisualizer.module.css';
+import { BubbleSortData } from '@/algorithms/sort/bubbleSort';
 
 interface BubbleSortVisualizerProps {
-  currentStep: AlgorithmStep;
+  currentStep: AlgorithmStep<BubbleSortData>;
 }
 
 export const BubbleSortVisualizer: React.FC<BubbleSortVisualizerProps> = ({ currentStep }) => {

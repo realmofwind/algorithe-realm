@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useCallback } from 'react';
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 import { useAlgorithm } from '../hooks/useAlgorithm';
 import { AlgorithmVisualizer } from '../components/AlgorithmVisualizer';
 import { BubbleSortVisualizer } from '../components/BubbleSortVisualizer';
@@ -16,7 +16,6 @@ import { QuickSortData } from '@/algorithms/sort/quickSort';
 import { SelectSortData } from '@/algorithms/sort/selectSort';
 import { AlgorithmStep } from '@/types/algorithm';
 
-import MatrixCode from '@/components/ui/matrix-code';
 
 type AlgorithmType = 'bubble' | 'quick' | 'select';
 
@@ -63,7 +62,7 @@ export default function Home() {
   return (
     <div className={styles.page}>
       {/* <MatrixCode /> */}
-      <motion.div
+      {/* <motion.div
         animate={{ rotateX: 90 }}
         transition={{ type: "spring", bounce: 0.25 }}
         style={{
@@ -71,8 +70,8 @@ export default function Home() {
           height: '100px',
           backgroundColor: 'red',
         }}
-      />
-      {/* <main className={styles.main}>
+      /> */}
+      <main className={styles.main}>
         <h1>Algorithm Visualization</h1>
         <div className={styles.algorithmSelector}>
           <button
@@ -101,7 +100,7 @@ export default function Home() {
         >
           {renderAlgorithmVisualizer()}
         </AlgorithmVisualizer>
-      </main> */}
+      </main>
     </div>
   );
 }

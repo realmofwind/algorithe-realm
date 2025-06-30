@@ -25,8 +25,8 @@ export const generateMergeSortSteps = (arr: number[]): AlgorithmStep<MergeSortDa
     for (let j = i + 1; j < array.length; j++) {
       recordComparisonStep(steps, {
         array: [...array],
-        left: left,
-        right: right,
+        left: minIndex,
+        right: j,
         sortedIndices: Array.from({ length: i }, (_, i) => i),
       }, minIndex, j);
 
@@ -37,8 +37,8 @@ export const generateMergeSortSteps = (arr: number[]): AlgorithmStep<MergeSortDa
     [array[minIndex], array[i]] = [array[i], array[minIndex]];
     recordSwapStep(steps, {
       array: [...array],
-      left: left,
-      right: right,
+      left: minIndex,
+      right: i,
       sortedIndices: Array.from({ length: i+1 }, (_, i) => i),
     }, minIndex, i);
   }
