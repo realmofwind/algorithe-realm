@@ -1,19 +1,22 @@
 'use client';
 
 import { useState, useMemo, useCallback } from 'react';
+import { motion } from "framer-motion";
 import { useAlgorithm } from '../hooks/useAlgorithm';
 import { AlgorithmVisualizer } from '../components/AlgorithmVisualizer';
 import { BubbleSortVisualizer } from '../components/BubbleSortVisualizer';
 import { QuickSortVisualizer } from '../components/QuickSortVisualizer';
 import { SelectSortVisualizer } from '../components/SelectSortVisualizer';
-import { generateBubbleSortSteps } from '../algorithms/bubbleSort';
-import { generateQuickSortSteps } from '../algorithms/quickSort';
-import { generateSelectSortSteps } from '../algorithms/selectSort';
+import { generateBubbleSortSteps } from '../algorithms/sort/bubbleSort';
+import { generateQuickSortSteps } from '../algorithms/sort/quickSort';
+import { generateSelectSortSteps } from '../algorithms/sort/selectSort';
 import styles from './page.module.css';
-import { BubbleSortData } from '@/algorithms/bubbleSort';
-import { QuickSortData } from '@/algorithms/quickSort';
-import { SelectSortData } from '@/algorithms/selectSort';
+import { BubbleSortData } from '@/algorithms/sort/bubbleSort';
+import { QuickSortData } from '@/algorithms/sort/quickSort';
+import { SelectSortData } from '@/algorithms/sort/selectSort';
 import { AlgorithmStep } from '@/types/algorithm';
+
+import MatrixCode from '@/components/ui/matrix-code';
 
 type AlgorithmType = 'bubble' | 'quick' | 'select';
 
@@ -43,7 +46,6 @@ export default function Home() {
   const [state, controller] =  useAlgorithm<BubbleSortData | QuickSortData | SelectSortData>(steps);
   const currentStep: AlgorithmStep<BubbleSortData | QuickSortData | SelectSortData> = steps[state.currentStep];
 
-  console.log({steps, currentStep, state});
 
   const renderAlgorithmVisualizer = useCallback(() => {
     switch(algorithmType) {
@@ -60,7 +62,17 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      <main className={styles.main}>
+      {/* <MatrixCode /> */}
+      <motion.div
+        animate={{ rotateX: 90 }}
+        transition={{ type: "spring", bounce: 0.25 }}
+        style={{
+          width: '100px',
+          height: '100px',
+          backgroundColor: 'red',
+        }}
+      />
+      {/* <main className={styles.main}>
         <h1>Algorithm Visualization</h1>
         <div className={styles.algorithmSelector}>
           <button
@@ -89,7 +101,7 @@ export default function Home() {
         >
           {renderAlgorithmVisualizer()}
         </AlgorithmVisualizer>
-      </main>
+      </main> */}
     </div>
   );
 }

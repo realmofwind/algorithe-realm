@@ -1,6 +1,6 @@
 import React from 'react';
 import { AlgorithmStep } from '../types/algorithm';
-import { QuickSortData } from '../algorithms/quickSort';
+import { QuickSortData } from '../algorithms/sort/quickSort';
 import styles from './QuickSortVisualizer.module.css';
 
 interface QuickSortVisualizerProps {

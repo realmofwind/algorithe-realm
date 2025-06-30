@@ -27,7 +27,6 @@ export function useAlgorithm<T>(
   });
 
   useEffect(() => {
-    console.log('initialSteps', initialSteps);
     setState(prev => ({
       ...prev,
       currentStep: 0,
@@ -52,7 +51,6 @@ export function useAlgorithm<T>(
   }, [state.currentStep, mergedConfig]);
 
   const start = useCallback(() => {
-    console.log('start');
     setState(prev => {
       const newState = { ...prev, isRunning: true, isPaused: false };
       return newState;
@@ -128,7 +126,6 @@ export function useAlgorithm<T>(
   }, []);
 
   const runNextStep = useCallback((currentState: AlgorithmState) => {
-    console.log('runNextStep');
     if (currentState.isPaused || !currentState.isRunning) return;
 
     if (currentState.currentStep < currentState.totalSteps) {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { AlgorithmVisualizerProps } from '../types/algorithm';
 import styles from './AlgorithmVisualizer.module.css';
-import {QuickSortData} from '../algorithms/quickSort';
-import {BubbleSortData} from '../algorithms/bubbleSort';
-import {SelectSortData} from '../algorithms/selectSort';
+import {QuickSortData} from '../algorithms/sort/quickSort';
+import {BubbleSortData} from '../algorithms/sort/bubbleSort';
+import {SelectSortData} from '../algorithms/sort/selectSort';
 
 export const AlgorithmVisualizer = <T extends QuickSortData | BubbleSortData | SelectSortData>({
   algorithm,

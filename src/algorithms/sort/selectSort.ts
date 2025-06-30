@@ -1,5 +1,5 @@
-import { AlgorithmStep } from '../types/algorithm';
-import { recordStep, recordCompletionStep, recordSwapStep, recordComparisonStep } from '../utils/algorithmUtils';
+import { AlgorithmStep } from '../../types/algorithm';
+import { recordStep, recordCompletionStep, recordSwapStep, recordComparisonStep } from '../../utils/algorithmUtils';
 
 export interface SelectSortData {
   array: number[];

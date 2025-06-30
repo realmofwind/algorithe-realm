@@ -1,5 +1,5 @@
-import { AlgorithmStep } from '../types/algorithm';
-import { recordStep, recordCompletionStep, recordSwapStep, recordComparisonStep } from '../utils/algorithmUtils';
+import { AlgorithmStep } from '../../types/algorithm';
+import { recordStep, recordCompletionStep, recordSwapStep, recordComparisonStep } from '../../utils/algorithmUtils';
 
 // 快速排序的数据类型
 export interface QuickSortData {

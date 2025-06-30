@@ -1,10 +1,7 @@
 import React from 'react';
 import { AlgorithmStep } from '../types/algorithm';
-import { SelectSortData } from '../algorithms/selectSort';
+import { SelectSortData } from '../algorithms/sort/selectSort';
 import styles from './SelectSortVisualizer.module.css';
-// import styles from './QuickSortVisualizer.module.css';
-
-console.log({styles});
 
 interface SelectSortVisualizerProps {
   currentStep: AlgorithmStep<SelectSortData>;
